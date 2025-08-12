@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tabungan Pontra (Postgres)</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<header>
+  <h1>Tabungan Pontra</h1>
+</header>
+<main>
+  <section class="card">
+    <h2>Tambah Siswa</h2>
+    <div class="row">
+      <input id="nama" placeholder="Nama siswa" />
+      <button id="add">Tambah</button>
+    </div>
+  </section>
+  <section class="card">
+    <h2>Daftar Siswa</h2>
+    <table id="tbl">
+      <thead><tr><th>ID</th><th>Nama</th><th>Saldo</th><th>Aksi</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+  <section class="card">
+    <h2>Transaksi Cepat</h2>
+    <div class="row">
+      <input id="sid" type="number" placeholder="ID siswa" />
+      <input id="jumlah" type="number" placeholder="Jumlah (Rp)" />
+    </div>
+    <div class="row">
+      <button id="setor">+ Setor</button>
+      <button id="tarik" class="danger">- Tarik</button>
+    </div>
+  </section>
+</main>
+<footer>
+  <small>© <span id="year"></span> Tabungan Pontra</small>
+</footer>
+<script src="/main.js" type="module"></script>
+</body>
+</html>
