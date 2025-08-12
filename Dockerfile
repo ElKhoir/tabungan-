@@ -1,14 +1,24 @@
+# Gunakan Node.js versi 20 berbasis Debian agar kompatibel dengan Prisma + OpenSSL
 FROM node:20-bullseye
 
+# Set working directory
 WORKDIR /app
-ENV NODE_ENV=production     PORT=3000
 
-RUN apt-get update && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
-
+# Copy file package.json dan package-lock.json
 COPY package*.json ./
-RUN npm install --omit=dev
 
+# Install dependencies
+RUN npm install
+
+# Copy semua file project
 COPY . .
 
-EXPOSE 3000
-CMD npx prisma migrate deploy && node server.js
+# Generate Prisma Client dan jalankan migrasi ke database
+RUN npx prisma generate
+RUN npx prisma migrate deploy
+
+# Expose port untuk aplikasi
+EXPOSE 8000
+
+# Jalankan aplikasi
+CMD ["npm", "start"]
