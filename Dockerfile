@@ -1,24 +1,21 @@
-# Gunakan Node.js versi 20 berbasis Debian agar kompatibel dengan Prisma + OpenSSL
-FROM node:20-bullseye
+app = "tabungan-santri-alhidayah"   # ganti jika app name di Fly beda
+primary_region = "sin"
 
-# Set working directory
-WORKDIR /app
+[build]
 
-# Copy file package.json dan package-lock.json
-COPY package*.json ./
+[env]
+  PORT = "3000"
 
-# Install dependencies
-RUN npm install
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 1
 
-# Copy semua file project
-COPY . .
-
-# Generate Prisma Client dan jalankan migrasi ke database
-RUN npx prisma generate
-RUN npx prisma migrate deploy
-
-# Expose port untuk aplikasi
-EXPOSE 8000
-
-# Jalankan aplikasi
-CMD ["npm", "start"]
+  [[http_service.checks]]
+    interval = "15s"
+    timeout = "3s"
+    method = "GET"
+    path = "/health"
+    grace_period = "10s"
